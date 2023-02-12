@@ -32,17 +32,12 @@ Se activa el Fluter Cli en el proyecto con el comando:
 ```
 dart pub global activate flutterfire_cli
 ```
-En nuestro proyecto añadimos la siguiente importación 
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-Esto aplicamos en los sevcios que vamos a utlizar
-
-
-
+Ahora configuramos al proyecto que se va conectar nuestra aplicación en flutter
 ```
 flutterfire configure
 ```
-Realizando este proceso la aplicacion se coencta con Firebase
+Realizando este proceso la aplicacion se conecta con Firebase
 
 
 ## Inicialización
@@ -74,7 +69,7 @@ En los servicos que nos ofrece se utilizara esto, para emplearlo podemos instala
 ```
 flutter pub add cloud_firestore
 ```
-o  agregando en el archivo pubsec.yaml lo siguiente: 
+o agregando en el archivo pubsec.yaml lo siguiente: 
 
 ```
 dependencies:
