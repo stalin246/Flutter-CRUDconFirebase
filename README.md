@@ -107,4 +107,359 @@ Podemos notar que en la aplicaion se crea el archivo [firebase_options.dart](htt
 De aqui parte el proceso del CRUD en donde crearemos una carpeta de [servicios](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/services) (eliminar , actualizar y leer) y carpeta de [paginas](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/pages) para que estas funciones la utilicen. 
 
 # CRUD 
+Para poder realizar el CRUD deberemos crear un directorio en el cual se encontraran las configuraciones de firebases para cada proceso.
+
+
+- Crear
+- Leer
+- Actualizar 
+- Borrar
+
+
+![directorio](https://user-images.githubusercontent.com/75056800/218315867-68b9b595-0faf-4010-96a9-6b257fa7a8d8.png)
+
+## Leer
+Este proceso se realizará con una función que mediante un Query apuntando a una colección creada en Firebase luego de mapearla nos traerá el id del documento y su valor.
+
+## Crear
+Este proceso se realizará con una función asíncrona que creara un registro en la colección.
+
+## Actualizar 
+Este proceso se realizará con una función asíncrona que devuelve el valor de un registro mediante una promesa comprueba si tiene el miso id y guarda el valor editado.
+
+## Borrar 
+Este proceso se realizará con una función asíncrona que devuelve el valor de un registro mediante una promesa comprueba si tiene el miso id elimina el registro.
+
+![image](https://user-images.githubusercontent.com/75056800/218316664-ffee1427-18be-4f85-84b1-a401f3f755e9.png)
+## Página para añadir estudiante
+
+
+```sh
+import 'package:crud_firebase/services/firebase_service.dart';
+import 'package:flutter/material.dart';
+
+class addStudentPage extends StatefulWidget {
+  const addStudentPage({super.key});
+  @override
+  State<addStudentPage> createState() => _addStudentPageState();
+}
+class _addStudentPageState extends State<addStudentPage> {
+  TextEditingController studentController = TextEditingController(text: '');
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 177, 212, 221),
+          shadowColor: Colors.grey,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: const Text('Crud Firebase'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const Text(
+                'Agregar estudiante',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: studentController,
+                decoration: const InputDecoration(
+                  hintText: 'Ingrese el nombre:',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 177, 212, 221),
+                    shadowColor: Colors.grey,
+                    elevation: 5,
+                    enabledMouseCursor: MouseCursor.defer,
+                  ),
+                  onPressed: () async {
+                    // print(studentController.text);
+                    await addStudent(studentController.text).then((_) {
+                      Navigator.pop(context);
+                      const TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      );
+                    });
+                  },
+                  child: const Text('Guardar'))
+            ],
+          ),
+        ));
+  }
+}
+
+```
+## Página para editar estudiante
+
+
+```sh
+import 'package:crud_firebase/services/firebase_service.dart';
+import 'package:flutter/material.dart';
+
+class editStudentPage extends StatefulWidget {
+  const editStudentPage({super.key});
+  @override
+  State<editStudentPage> createState() => _editStudentPageState();
+}
+
+class _editStudentPageState extends State<editStudentPage> {
+// Creamos el conmtrolador para poder guardar la informacion
+  TextEditingController studentController = TextEditingController(text: '');
+
+  @override
+  Widget build(BuildContext context) {
+    // Para recibir los argumentos usamos map ya que es un diccionario o json
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    studentController.text = arguments['name'];
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 177, 212, 221),
+          shadowColor: Colors.grey,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: const Text('Edición'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const Text(
+                'Editar estudiante',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextField(
+                controller: studentController,
+                decoration: const InputDecoration(
+                  hintText: 'Ingrese el nuevo Nombre:',
+                ),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 177, 212, 221),
+                    shadowColor: Colors.grey,
+                    elevation: 5,
+                    enabledMouseCursor: MouseCursor.defer,
+                  ),
+                  onPressed: () async {
+                    // print(arguments['uid']);
+                    await updateStudent(
+                            arguments['uid'], studentController.text)
+                        .then((_) {
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: const Text('Actualizar'))
+            ],
+          ),
+        ));
+  }
+}
+
+
+```
+
+
+## Página principal en la que se renderizara la vista y se podrá eliminar un registro
+
+
+```sh
+// Pagina principal
+import 'package:crud_firebase/services/firebase_service.dart';
+import 'package:flutter/material.dart';
+
+class Home extends StatefulWidget {
+  const Home({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 177, 212, 221),
+        shadowColor: Colors.grey,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        title: const Text('Crud Firebase'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            //Titulo cone stilos
+            const Text(
+              'Lista de estudiantes',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            //Para que se vea la lista de estudiantes
+            Expanded(
+                child: FutureBuilder(
+                    future: getStudent(),
+                    // La lista que se envia se guarda en snapshot
+                    builder: ((context, snapshot) {
+                      //Para que no haya error cuando se agrege un dato
+                      if (snapshot.hasData) {
+                        // return const Text('Hola');
+                        return ListView.builder(
+                          //Esto almacena la lista en la pantalla
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: ((context, index) {
+                         
+                            //Es una forma de borrar elementos(se puede movewrl los nombres en la aplciacion)
+                            return Dismissible(
+                              onDismissed: (direction) async {
+                                await deleteStudent(
+                                    snapshot.data?[index]['uid']);
+                                snapshot.data?.removeAt(index);
+                              },
+                              confirmDismiss: (direction) async {
+                                bool result = false;
+                                // print("confirm dismiss");
+                                result = await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                            "¿Vas a eliminar a este usuario ${snapshot.data?[index]['name']}?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                return Navigator.pop(
+                                                  context,
+                                                  false,
+                                                );
+                                              },
+                                              child: const Text(
+                                                "Cancelar",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              )),
+                                          TextButton(
+                                              onPressed: () {
+                                                return Navigator.pop(
+                                                  context,
+                                                  true,
+                                                );
+                                              },
+                                              child: const Text("Si")),
+                                        ],
+                                      );
+                                    });
+
+                                return result;
+                              },
+                              background: Container(
+                                color: Colors.red,
+                                child: const Icon(Icons.delete),
+                              ),
+
+                              //actualizar estado de la lista
+
+                      
+                              direction: DismissDirection.endToStart,
+                              key: Key(snapshot.data?[index]['uid']),
+                              //actualizar estado de la lista
+
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 10,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: ListTile(
+                                  title: Text(snapshot.data?[index]['name']),
+                                  trailing: const Icon(Icons.edit),
+                                  onTap: () async {
+                                    // Recibe argumentos para mandar el nombre a editar
+                                    await Navigator.pushNamed(context, '/edit',
+                                        arguments: {
+                                          "name": snapshot.data?[index]['name'],
+                                          "uid": snapshot.data?[index]['uid']
+                                        });
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }))),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(92, 121, 216, 240),
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/add');
+          setState(() {});
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+```
+Para poder clonar este repositorio utilizaremos el siguiente comando tomando en cuenta que se debe tener instalado [GIT]: <https://git-scm.com/downloads> con anterioridad
+
+```sh
+git clone https://github.com/stalin246/Flutter-CRUDconFirebase.git
+
+```
+
+## una vez clonado el repositorio se lo podría abrir con el editor preferido, cuando ya estemos con el proyecto abierto deberemos ejecutar el siguiente comando que instalara lo que el proyecto 
+
+```sh
+flutter packages get
+
+```
+
 
