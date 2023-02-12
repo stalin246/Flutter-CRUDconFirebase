@@ -70,9 +70,9 @@ Una vez inicializado sepuede utilizar FlutterFire
 
 ## Cloud Firestore
 
-En los servicos dque nos ofrece se utilizara esto, para emplearlo podemos instalarlo por medio del comando:
+En los servicos que nos ofrece se utilizara esto, para emplearlo podemos instalarlo por medio del comando:
 ```
-flutter pub add cloud_ firestore
+flutter pub add cloud_firestore
 ```
 o  agregando en el archivo pubsec.yaml lo siguiente: 
 
