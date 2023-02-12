@@ -1,5 +1,16 @@
 # crud_firebase
 
+### Integrantes: 
+- Eduardo Farinango
+- Luis Valencia
+
+![image](https://user-images.githubusercontent.com/77359338/218290506-0aafa983-a608-446c-8162-1ea9d6fe86f6.png)
+
+Antes de que se pueda usar cualquier servicio de Firebase, primero debe instalar el firebase_core complemento, que es responsable de conectar su aplicación a Firebase.
+
+Instale el complemento ejecutando el siguiente comando desde la raíz del proyecto:
+
+
 A new Flutter project.
 
 ## Getting Started
