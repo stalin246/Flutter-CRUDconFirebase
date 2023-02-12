@@ -4,12 +4,12 @@
 - Eduardo Farinango
 - Luis Valencia
 
-
-# Firebase 
+# Configuración
+## Firebase 
 Creamos un proyecto en el sitio [oficial](https://firebase.google.com/?hl=es-419) y utilizaremos cloud firestore para crear nuestra coleccion que alojara el campo y valor que creemos en nuestra aplicación
 ![image](https://user-images.githubusercontent.com/77359338/218292674-a39a0d87-3f21-410f-89db-c9cf2cae4f0d.png)
 
-# Descripción general de FlutterFire
+## Descripción general de FlutterFire
 
 ![image](https://user-images.githubusercontent.com/77359338/218292757-d83232b6-6e72-4baa-ba71-daa88490fe04.png)
 
@@ -22,7 +22,7 @@ Instale el complemento ejecutando el siguiente comando desde la raíz del proyec
 flutter pub add firebase_core
 ```
 Para configurarlo se debe elegir el tipo de proyecto creado en Firebase y elegir el tipo de servicio, para eso se emplea este comando:
-# Inicializando FlutterFire
+## Inicializando FlutterFire
 
 Antes de que se pueda usar cualquiera de los servicios de Firebase, se debe inicializar FlutterFire, puede obtener más información sobre Firebase CLI en la [documentación](https://firebase.google.com/docs/cli)
 
@@ -45,7 +45,7 @@ flutterfire configure
 Realizando este proceso la aplicacion se coencta con Firebase
 
 
-# Inicialización
+## Inicialización
 
 Importamos la libreria en la siguiente ruta: 
 ```
@@ -68,7 +68,7 @@ void main() async {
 ```
 Una vez inicializado sepuede utilizar FlutterFire
 
-# Cloud Firestore
+## Cloud Firestore
 
 En los servicos dque nos ofrece se utilizara esto, para emplearlo podemos instalarlo por medio del comando:
 ```
@@ -85,7 +85,7 @@ Ahora se podra importar el servicio de Cloud Firestore en los servicios que crea
 import 'package:cloud_firestore/cloud_firestore.dart';
 ```
 
-# Configurando la aplicación
+## Configurando la aplicación
 
 En el archivo android/app/build.gradle el minSDK version va segun en lo que se indica en el terminal (com0 un tipo de error) y debe estar habilitado los hilos de ejecución ya que se necesita mas disponibilad para el dispositivo que se va utilizar en este caso un Android.
 
@@ -105,10 +105,11 @@ En el archivo android/app/build.gradle el minSDK version va segun en lo que se i
     }
 ```
 
-# En la aplicación
+## En la aplicación
 
 Podemos notar que en la aplicaion se crea el archivo [firebase_options.dart](https://github.com/stalin246/Flutter-CRUDconFirebase/blob/master/lib/firebase_options.dart) donde contiene nuestros token del proyecto que se creo en firebase y por medio de esto se realiza la conexion.
 
 De aqui parte el proceso del CRUD en donde crearemos una carpeta de [servicios](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/services) (eliminar , actualizar y leer) y carpeta de [paginas](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/pages) para que estas funciones la utilicen. 
 
+# CRUD 
 
