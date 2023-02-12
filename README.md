@@ -107,7 +107,7 @@ En el archivo android/app/build.gradle el minSDK version va segun el lo que se i
 
 # En la aplicación
 
-Podemos notar que en la aplicaion se crea en el archivo [firebase_options.dart](https://github.com/stalin246/Flutter-CRUDconFirebase/blob/master/lib/firebase_options.dart) donde se contiene nuestros token del proyecto que se creo en firebase y realiza la conexion.
+Podemos notar que en la aplicaion se crea el archivo [firebase_options.dart](https://github.com/stalin246/Flutter-CRUDconFirebase/blob/master/lib/firebase_options.dart) donde contiene nuestros token del proyecto que se creo en firebase y por medio de esto se realiza la conexion.
 
 De aqui parte el proceso del CRUD en donde crearemos una carpeta de [servicios](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/services) (eliminar , actualizar y leer) y carpeta de [paginas](https://github.com/stalin246/Flutter-CRUDconFirebase/tree/master/lib/pages) para que estas funciones la utilicen. 
 
