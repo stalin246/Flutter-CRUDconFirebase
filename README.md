@@ -86,9 +86,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 # Configurando la aplicación
 
-En el archivo android/app/build.gradle el minSDK version va segun el lo que se indica en el terminal por ejemplo:
+En el archivo android/app/build.gradle el minSDK version va segun el lo que se indica en el terminal y debe estar habilitado los hilos de ejecución 
 
 
 ```
-
+ defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.example.crud_firebase"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        // minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
+        multiDexEnabled true
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
 ```
