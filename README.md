@@ -87,7 +87,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 # Configurando la aplicación
 
-En el archivo android/app/build.gradle el minSDK version va segun el lo que se indica en el terminal y debe estar habilitado los hilos de ejecución 
+En el archivo android/app/build.gradle el minSDK version va segun en lo que se indica en el terminal (com0 un tipo de error) y debe estar habilitado los hilos de ejecución ya que se necesita mas disponibilad para el dispositivo que se va utilizar en este caso un Android.
 
 
 ```
